@@ -62,7 +62,7 @@
             if($medical == "None" && $surgical == "None")
             {
               echo "<div class=\"alert alert-info\">";
-              echo "No results found for the term \"".$term.". Please modify the search term.";
+              echo "No results found for the term \"".$term."\". Please modify the search term.";
               echo "</div>";
             }
             else {

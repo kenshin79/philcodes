@@ -24,11 +24,11 @@
         <div class="container">
           <h1 class="display-3">Philhealth ICD and RVS Codes Finder</h1>
           <p class="lead">Code diagnoses compatible with Philhealth for effective benefit claims!</p>
-          <p><small>Created by: <a href="<?php echo base_url()?>" ><img src="<?php echo base_url()."assets/img/homers_seal.png";?>" height="30" width="30" ></a> Homer Uy Co, MD 17 December 2017</small></p>
+          <p><small><a href="<?php echo base_url()?>" ><img src="<?php echo base_url()."assets/img/homers_seal.png";?>" height="30" width="30" ></a> hucomd 17 December 2017</small></p>
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-8">
 
               <?php
                 if($this->session->userdata('message')){
@@ -36,19 +36,22 @@
                   echo validation_errors();
                   echo "</div>";
                 }
-
+                echo form_open('welcome');
               ?>
             <div class="form-group">
 
               <label for="term">Enter search term (minimum 3 characters):</label>
           <?php
-                echo form_open('welcome');
+
                 echo form_input(array('name'=>'term', 'class'=>'form-control', 'value'=>$term));
+
           ?>
             </div>
 
-          </form>
+                <button type="submit" class="btn btn-primary">Find</button>
+
         </div>
+          </form>
       </div>
       <br/>
       <div class="row justify-content-center">
@@ -56,6 +59,13 @@
         <?php
           if($medical || $surgical)
           {
+            if($medical == "None" && $surgical == "None")
+            {
+              echo "<div class=\"alert alert-info\">";
+              echo "No results found for the term \"".$term.". Please modify the search term.";
+              echo "</div>";
+            }
+            else {
               echo "<table class=\"table table-striped datatable\">";
               echo "<thead>";
               echo "<tr>";
@@ -66,7 +76,7 @@
               echo "<td>Professional Fee</td>";
               echo "</tr>";
               echo "<tbody>";
-              if($medical)
+              if($medical != "None")
               {
                 foreach ($medical as $row) {
                   echo "<tr>";
@@ -78,7 +88,7 @@
                   echo "</tr>";
                 }
               }
-              if($surgical)
+              if($surgical != "None")
               {
                 foreach ($surgical as $row) {
                   echo "<tr>";
@@ -92,9 +102,12 @@
 
               }
               echo "</tbody>";
+            }
+
 
 
           }
+
         ?>
         </div>
       </div>

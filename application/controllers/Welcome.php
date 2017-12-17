@@ -36,8 +36,20 @@ class Welcome extends CI_Controller {
 		else{
 			$term = $this->input->post('term', TRUE);
 			$data['term'] = $term;
-			$data['medical'] = $this->Codefinder_model->get_icd($term);
-			$data['surgical'] = $this->Codefinder_model->get_rvs($term);
+			if($medical = $this->Codefinder_model->get_icd($term))
+			{
+				$data['medical'] = $medical;
+			}
+			else {
+				$data['medical'] = "None";
+			}
+			if($surgical = $this->Codefinder_model->get_rvs($term))
+			{
+				$data['surgical'] = $surgical;
+			}
+			else {
+				$data['surgical'] = "None";
+			}
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/footer');
 		}
